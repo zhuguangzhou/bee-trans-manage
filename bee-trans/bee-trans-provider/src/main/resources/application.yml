@@ -1,0 +1,41 @@
+server:
+  port: 8803
+spring:
+  application:
+    name: yac-cp-provider
+
+
+druid:
+  #主数据源
+  datasource:
+    master:
+      url: jdbc:mysql://192.168.2.2:3306/microservices-admin-carport?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      driverClassName: com.mysql.jdbc.Driver
+      username: root
+      password: 123123
+      validationQuery: SELECT 1
+    #其他数据源
+    cluster:
+      - names: sqlserver
+        url: jdbc:sqlserver://192.168.2.2:1433;DatabaseName=NewChargeStation5
+        driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        username: sa
+        password: YaC1073741824
+        validationQuery: SELECT 1
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8801/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 2
+    lease-expiration-duration-in-seconds: 5
+
+
+
+mybatis:
+  mapperLocations: classpath*:mapper/**/*.xml
+  typeAliasesPackage: com.beehive.cp.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

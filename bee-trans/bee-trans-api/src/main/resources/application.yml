@@ -1,0 +1,69 @@
+server:
+  port: 8802
+
+spring:
+  application:
+    name: yac-cp-web
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password :
+    timeout: 0ms
+    jedis:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8801/eureka/
+
+
+feign:
+  httpclient:
+    enabled: true
+  hystrix:
+    enabled: true
+
+
+
+hystrix:
+  shareSecurityContext: true
+  command:
+    default:
+      circuitBreaker:
+        sleepWindowInMilliseconds: 100000
+        forceClosed: true
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 120000
+  threadpool:
+    default:
+      coreSize: 2000
+      maxQueueSize: 2000
+      queueSizeRejectionThreshold: 2000
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          strategy: THREAD
+          semaphore:
+            maxConcurrentRequests: 10000
+          thread:
+            timeoutInMilliseconds: 120000
+
+
+yac-cp-provider:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+    ReadTimeout: 300000
+    ConnectTimeout: 300000
+    maxAutoRetries: 0

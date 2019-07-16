@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bee.trans.provider.mapper.test.TestMapper">
+
+    <select id="getUserInfo" resultType="com.bee.trans.entity.sqlserver.TabUserBasicInfo">
+          select
+              NICK_NAME nickName,
+              WX_HEAD_PICTURE_URL wxHeadPictureUrl,
+              MOBILE_PHONE mobilePhone,
+              BALANCE blance,
+              CREATE_USER_ID createUserId
+          from
+              TAB_USER_BASIC_INFO
+          where
+              MOBILE_PHONE = #{tel}
+    </select>
+
+</mapper>
